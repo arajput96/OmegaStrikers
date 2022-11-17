@@ -4,7 +4,7 @@ import fetch from "node-fetch";
 // Reading our test file
 const file = reader.readFile('./TournamentResponses.xlsx')
   
-let data = []
+const data = []
   
 const sheets = file.SheetNames
 
@@ -28,7 +28,7 @@ async function runScript() {
   for(let i = 0; i < sheets.length; i++)
   {
     const temp = reader.utils.sheet_to_json(file.Sheets[file.SheetNames[i]])
-    temp.forEach(async (res) => {
+    temp.forEach((res) => {
       data.push(res);
     })
   }
