@@ -3,10 +3,15 @@ import fetch from "node-fetch";
 
 // Reading our test file
 const file = reader.readFile('./TournamentResponses.xlsx')
-  
-const data = []
-  
 const sheets = file.SheetNames
+
+//Data from excel sheets will be stored here
+const data = []
+
+// Keys associated with the values from excel sheet
+const nameString = 'Please enter your account name exactly how it appears in game.\n\nI need to be able to check your rank on Corestrike.gg, if I cannot you will be disqualified';
+const backupString = 'Please enter your account name exactly how it appears in game.\r\n\r\nI need to be able to check your rank on Corestrike.gg, if I cannot you will be disqualified';
+const positionString = 'What is your primary position in Omega Strikers?';
 
 // Player Object for storing name + rating from Corestrike.gg
 const players = []
@@ -35,14 +40,14 @@ async function runScript() {
   
   // Pulling information from Corestrike.gg
   for(let i = 0; i < data.length; i++){
-    const playerName = data[i]['Please enter your account name exactly how it appears in game.\n\nI need to be able to check your rank on Corestrike.gg, if I cannot you will be disqualified'];
+    const playerName = data[i][backupString];
     const playerStats = await getPlayerData(playerName);
     players.push(
       {
         Name: playerName,
         Rating: playerStats.rating,
         Rank: playerStats.rating_display,
-        Position: data[i]['What is your primary position in Omega Strikers?']
+        Position: data[i][positionString]
       }        
     ) 
     // console.log(data);
